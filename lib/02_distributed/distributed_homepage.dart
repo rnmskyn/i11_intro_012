@@ -12,16 +12,9 @@ class StateArguments {
 }
 
 class CounterWidget extends StatelessWidget {
-  const CounterWidget({
-    super.key,
-    required this.value,
-    required this.incCallBack,
-    required this.decCallBack,
-  });
+  const CounterWidget({super.key, required this.stateArguments});
 
-  final int value;
-  final Function() incCallBack;
-  final Function() decCallBack;
+  final StateArguments stateArguments;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +24,13 @@ class CounterWidget extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.arrow_upward),
           iconSize: 40,
-          onPressed: incCallBack,
+          onPressed: stateArguments.incCallBack,
         ),
-        Text(value.toString()),
+        Text(stateArguments.value.toString()),
         IconButton(
           icon: const Icon(Icons.arrow_downward),
           iconSize: 40,
-          onPressed: decCallBack,
+          onPressed: stateArguments.decCallBack,
         ),
       ],
     );
@@ -62,7 +55,6 @@ class SumDisplay extends StatelessWidget {
   }
 }
 
-
 class DistributedRow extends StatelessWidget {
   const DistributedRow({
     super.key,
@@ -78,16 +70,8 @@ class DistributedRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        CounterWidget(
-          value: firstCounterArgs.value,
-          incCallBack: firstCounterArgs.incCallBack,
-          decCallBack: firstCounterArgs.decCallBack,
-        ),
-        CounterWidget(
-          value: secondCounterArgs.value,
-          incCallBack: secondCounterArgs.incCallBack,
-          decCallBack: secondCounterArgs.decCallBack,
-        ),
+        CounterWidget(stateArguments: firstCounterArgs),
+        CounterWidget(stateArguments: secondCounterArgs),
       ],
     );
   }
