@@ -31,45 +31,6 @@ class CounterWidget extends StatelessWidget {
     );
   }
 }
-
-
-/*
-class CounterWidget extends StatefulWidget {
-  const CounterWidget({
-    super.key,
-    required this.value,
-    required this.incCallBack,
-    required this.decCallBack,
-  });
-  final int value;
-  final Function() incCallBack;
-  final Function() decCallBack;
-  @override
-  State<CounterWidget> createState() => _CounterWidgetState();
-}
-
-class _CounterWidgetState extends State<CounterWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        IconButton(
-          icon: Icon(Icons.arrow_upward),
-          iconSize: 40,
-          onPressed: widget.incCallBack,
-        ),
-        Text(widget.value.toString()),
-        IconButton(
-          icon: Icon(Icons.arrow_downward),
-          iconSize: 40,
-          onPressed: widget.decCallBack,
-        ),
-      ],
-    );
-  }
-}
-*/
-
 class SumDisplay extends StatelessWidget {
   final int sum;
 
