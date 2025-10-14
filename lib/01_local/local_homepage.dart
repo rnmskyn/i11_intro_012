@@ -31,6 +31,7 @@ class CounterWidget extends StatelessWidget {
     );
   }
 }
+
 class SumDisplay extends StatelessWidget {
   final int sum;
 
@@ -48,6 +49,7 @@ class SumDisplay extends StatelessWidget {
     );
   }
 }
+
 class LocalHomepage extends StatefulWidget {
   const LocalHomepage({super.key});
 
@@ -90,73 +92,66 @@ class _LocalHomepageState extends State<LocalHomepage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Title'),
+        title: SumDisplay(sum: _counter1 + _counter2 + _counter3 + _counter4),
       ),
       body: Center(
-        child: Column(
+        child: GridView.count(
+          primary: false,
+          padding: const EdgeInsets.all(20),
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          crossAxisCount: 2,
           children: <Widget>[
-            SumDisplay(sum: _counter1 + _counter2 + _counter3 + _counter4),
-            Expanded(
-              child: GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(20),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                crossAxisCount: 2,
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[100],
-                    child: CounterWidget(
-                      value: _counter1,
-                      incCallBack: () {
-                        _incCounter1(1);
-                      },
-                      decCallBack: () {
-                        _incCounter1(-1);
-                      },
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[200],
-                    child: CounterWidget(
-                      value: _counter2,
-                      incCallBack: () {
-                        _incCounter2(1);
-                      },
-                      decCallBack: () {
-                        _incCounter2(-1);
-                      },
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[300],
-                    child: CounterWidget(
-                      value: _counter3,
-                      incCallBack: () {
-                        _incCounter3(1);
-                      },
-                      decCallBack: () {
-                        _incCounter3(-1);
-                      },
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.teal[400],
-                    child: CounterWidget(
-                      value: _counter4,
-                      incCallBack: () {
-                        _incCounter4(1);
-                      },
-                      decCallBack: () {
-                        _incCounter4(-1);
-                      },
-                    ),
-                  ),
-                ],
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[100],
+              child: CounterWidget(
+                value: _counter1,
+                incCallBack: () {
+                  _incCounter1(1);
+                },
+                decCallBack: () {
+                  _incCounter1(-1);
+                },
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[200],
+              child: CounterWidget(
+                value: _counter2,
+                incCallBack: () {
+                  _incCounter2(1);
+                },
+                decCallBack: () {
+                  _incCounter2(-1);
+                },
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[300],
+              child: CounterWidget(
+                value: _counter3,
+                incCallBack: () {
+                  _incCounter3(1);
+                },
+                decCallBack: () {
+                  _incCounter3(-1);
+                },
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[400],
+              child: CounterWidget(
+                value: _counter4,
+                incCallBack: () {
+                  _incCounter4(1);
+                },
+                decCallBack: () {
+                  _incCounter4(-1);
+                },
               ),
             ),
           ],
