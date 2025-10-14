@@ -1,10 +1,150 @@
 import 'package:flutter/material.dart';
 
-class DistributedHomepage extends StatelessWidget {
-  const DistributedHomepage({super.key});
+class StateArguments {
+  StateArguments({
+    required this.value,
+    required this.incCallBack,
+    required this.decCallBack,
+  });
+  int value;
+  VoidCallback incCallBack;
+  VoidCallback decCallBack;
+}
+
+class CounterWidget extends StatelessWidget {
+  const CounterWidget({
+    super.key,
+    required this.value,
+    required this.incCallBack,
+    required this.decCallBack,
+  });
+
+  final int value;
+  final Function() incCallBack;
+  final Function() decCallBack;
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.arrow_upward),
+          iconSize: 40,
+          onPressed: incCallBack,
+        ),
+        Text(value.toString()),
+        IconButton(
+          icon: const Icon(Icons.arrow_downward),
+          iconSize: 40,
+          onPressed: decCallBack,
+        ),
+      ],
+    );
+  }
+}
+
+class SumDisplay extends StatelessWidget {
+  final int sum;
+
+  const SumDisplay({super.key, required this.sum});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Text(sum.toString()),
+        const Text("Overengineered Counter"),
+        Text(sum.toString()),
+      ],
+    );
+  }
+}
+
+
+class DistributedRow extends StatelessWidget {
+  const DistributedRow({
+    super.key,
+    required this.firstCounterArgs,
+    required this.secondCounterArgs,
+  });
+
+  final StateArguments firstCounterArgs;
+  final StateArguments secondCounterArgs;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        CounterWidget(
+          value: firstCounterArgs.value,
+          incCallBack: firstCounterArgs.incCallBack,
+          decCallBack: firstCounterArgs.decCallBack,
+        ),
+        CounterWidget(
+          value: secondCounterArgs.value,
+          incCallBack: secondCounterArgs.incCallBack,
+          decCallBack: secondCounterArgs.decCallBack,
+        ),
+      ],
+    );
+  }
+}
+
+class DistributedHomepage extends StatefulWidget {
+  const DistributedHomepage({super.key});
+
+  @override
+  State<DistributedHomepage> createState() => _DistributedHomepageState();
+}
+
+class _DistributedHomepageState extends State<DistributedHomepage> {
+  int _counter1 = 0;
+  int _counter2 = 0;
+
+  void _incCounter1(int amount) {
+    setState(() {
+      _counter2 += amount;
+    });
+  }
+
+  void _incCounter2(int amount) {
+    setState(() {
+      _counter1 += amount;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: SumDisplay(sum: _counter1 + _counter2),
+      ),
+      body: Center(
+        child: DistributedRow(
+          firstCounterArgs: StateArguments(
+            value: _counter1,
+            incCallBack: () {
+              _incCounter1(1);
+            },
+            decCallBack: () {
+              _incCounter1(-1);
+            },
+          ),
+          secondCounterArgs: StateArguments(
+            value: _counter2,
+            incCallBack: () {
+              _incCounter2(1);
+            },
+            decCallBack: () {
+              _incCounter2(-1);
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
