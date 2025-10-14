@@ -1,5 +1,39 @@
 import 'package:flutter/material.dart';
 
+class CounterWidget extends StatelessWidget {
+  const CounterWidget({
+    super.key,
+    required this.value,
+    required this.incCallBack,
+    required this.decCallBack,
+  });
+
+  final int value;
+  final Function() incCallBack;
+  final Function() decCallBack;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.arrow_upward),
+          iconSize: 40,
+          onPressed: incCallBack,
+        ),
+        Text(value.toString()),
+        IconButton(
+          icon: const Icon(Icons.arrow_downward),
+          iconSize: 40,
+          onPressed: decCallBack,
+        ),
+      ],
+    );
+  }
+}
+
+
+/*
 class CounterWidget extends StatefulWidget {
   const CounterWidget({
     super.key,
@@ -34,6 +68,7 @@ class _CounterWidgetState extends State<CounterWidget> {
     );
   }
 }
+*/
 
 class SumDisplay extends StatelessWidget {
   final int sum;
