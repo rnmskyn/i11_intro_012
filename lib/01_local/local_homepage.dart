@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class CounterWidget extends StatefulWidget {
   const CounterWidget({
     super.key,
+    required this.value,
     required this.incCallBack,
     required this.decCallBack,
   });
+  final int value;
   final Function() incCallBack;
   final Function() decCallBack;
   @override
@@ -13,8 +15,6 @@ class CounterWidget extends StatefulWidget {
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
-  int _counter = 0;
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -24,7 +24,7 @@ class _CounterWidgetState extends State<CounterWidget> {
           iconSize: 40,
           onPressed: widget.incCallBack,
         ),
-        Text(_counter.toString()),
+        Text(widget.value.toString()),
         IconButton(
           icon: Icon(Icons.arrow_downward),
           iconSize: 40,
@@ -33,18 +33,25 @@ class _CounterWidgetState extends State<CounterWidget> {
       ],
     );
   }
-
-  void incCounter() {
-    _counter++;
-  }
-
-  void decCounter() {
-    _counter--;
-  }
-
-  int get counter => _counter;
 }
 
+class SumDisplay extends StatelessWidget {
+  final int sum;
+
+  const SumDisplay({super.key, required this.sum});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(sum.toString()),
+        const Text("Overengineered Counter"),
+        Text(sum.toString()),
+      ],
+    );
+  }
+}
 class LocalHomepage extends StatefulWidget {
   const LocalHomepage({super.key});
 
@@ -53,11 +60,32 @@ class LocalHomepage extends StatefulWidget {
 }
 
 class _LocalHomepageState extends State<LocalHomepage> {
-  int _counter = 0;
+  int _counter1 = 0;
+  int _counter2 = 0;
+  int _counter3 = 0;
+  int _counter4 = 0;
 
-  void _incrementCounter() {
+  void _incCounter1(int amount) {
     setState(() {
-      _counter++;
+      _counter4 += amount;
+    });
+  }
+
+  void _incCounter2(int amount) {
+    setState(() {
+      _counter3 += amount;
+    });
+  }
+
+  void _incCounter3(int amount) {
+    setState(() {
+      _counter2 += amount;
+    });
+  }
+
+  void _incCounter4(int amount) {
+    setState(() {
+      _counter1 += amount;
     });
   }
 
@@ -69,41 +97,75 @@ class _LocalHomepageState extends State<LocalHomepage> {
         title: Text('Title'),
       ),
       body: Center(
-        child: GridView.count(
-          primary: false,
-          padding: const EdgeInsets.all(20),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          crossAxisCount: 2,
+        child: Column(
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: Colors.teal[100],
-              child: CounterWidget(incCallBack: (){}, decCallBack: (){}),
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: Colors.teal[200],
-              child: CounterWidget(incCallBack: (){}, decCallBack: (){}),
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: Colors.teal[300],
-              child: CounterWidget(incCallBack: (){}, decCallBack: (){}),
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: Colors.teal[400],
-              child: CounterWidget(incCallBack: (){}, decCallBack: (){}),
+            SumDisplay(sum: _counter1 + _counter2 + _counter3 + _counter4),
+            Expanded(
+              child: GridView.count(
+                primary: false,
+                padding: const EdgeInsets.all(20),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: 2,
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[100],
+                    child: CounterWidget(
+                      value: _counter1,
+                      incCallBack: () {
+                        _incCounter1(1);
+                      },
+                      decCallBack: () {
+                        _incCounter1(-1);
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[200],
+                    child: CounterWidget(
+                      value: _counter2,
+                      incCallBack: () {
+                        _incCounter2(1);
+                      },
+                      decCallBack: () {
+                        _incCounter2(-1);
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[300],
+                    child: CounterWidget(
+                      value: _counter3,
+                      incCallBack: () {
+                        _incCounter3(1);
+                      },
+                      decCallBack: () {
+                        _incCounter3(-1);
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.teal[400],
+                    child: CounterWidget(
+                      value: _counter4,
+                      incCallBack: () {
+                        _incCounter4(1);
+                      },
+                      decCallBack: () {
+                        _incCounter4(-1);
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
