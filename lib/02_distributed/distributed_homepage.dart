@@ -9,8 +9,8 @@ class CounterWidget extends StatelessWidget {
   });
 
   final int value;
-  final Function() incCallBack;
-  final Function() decCallBack;
+  final VoidCallback incCallBack;
+  final VoidCallback decCallBack;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,33 @@ class SumDisplay extends StatelessWidget {
         const Text("Overengineered Counter"),
         Text(sum.toString()),
       ],
+    );
+  }
+}
+
+class GridCell extends StatelessWidget {
+  const GridCell({
+    super.key,
+    required this.value,
+    required this.incCallBack,
+    required this.decCallBack,
+    this.color,
+  });
+  final int value;
+  final VoidCallback incCallBack;
+  final VoidCallback decCallBack;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      color: color ?? Colors.blueAccent,
+      child: CounterWidget(
+        value: value,
+        incCallBack: incCallBack,
+        decCallBack: decCallBack,
+      ),
     );
   }
 }
@@ -102,57 +129,41 @@ class _DistributedHomepageState extends State<DistributedHomepage> {
           mainAxisSpacing: 10,
           crossAxisCount: 2,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: Colors.teal[100],
-              child: CounterWidget(
-                value: _counter1,
-                incCallBack: () {
-                  _incCounter1(1);
-                },
-                decCallBack: () {
-                  _incCounter1(-1);
-                },
-              ),
+            GridCell(
+              value: _counter1,
+              incCallBack: () {
+                _incCounter1(1);
+              },
+              decCallBack: () {
+                _incCounter1(-1);
+              },
             ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: Colors.teal[200],
-              child: CounterWidget(
-                value: _counter2,
-                incCallBack: () {
-                  _incCounter2(1);
-                },
-                decCallBack: () {
-                  _incCounter2(-1);
-                },
-              ),
+            GridCell(
+              value: _counter2,
+              incCallBack: () {
+                _incCounter2(1);
+              },
+              decCallBack: () {
+                _incCounter2(-1);
+              },
             ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: Colors.teal[300],
-              child: CounterWidget(
-                value: _counter3,
-                incCallBack: () {
-                  _incCounter3(1);
-                },
-                decCallBack: () {
-                  _incCounter3(-1);
-                },
-              ),
+            GridCell(
+              value: _counter3,
+              incCallBack: () {
+                _incCounter3(1);
+              },
+              decCallBack: () {
+                _incCounter3(-1);
+              },
             ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              color: Colors.teal[400],
-              child: CounterWidget(
-                value: _counter4,
-                incCallBack: () {
-                  _incCounter4(1);
-                },
-                decCallBack: () {
-                  _incCounter4(-1);
-                },
-              ),
+            GridCell(
+              value: _counter4,
+              incCallBack: () {
+                _incCounter4(1);
+              },
+              decCallBack: () {
+                _incCounter4(-1);
+              },
             ),
           ],
         ),
