@@ -85,32 +85,26 @@ class DistributedHomepage extends StatefulWidget {
 }
 
 class _DistributedHomepageState extends State<DistributedHomepage> {
-  int _counter1 = 0;
-  int _counter2 = 0;
-  int _counter3 = 0;
-  int _counter4 = 0;
+  List<int> counter = List.filled(4, 0);
 
-  void _incCounter1(int amount) {
+  void _incCounter(int index, int amount) {
+    int newIndex = 0;
     setState(() {
-      _counter4 += amount;
-    });
-  }
-
-  void _incCounter2(int amount) {
-    setState(() {
-      _counter3 += amount;
-    });
-  }
-
-  void _incCounter3(int amount) {
-    setState(() {
-      _counter2 += amount;
-    });
-  }
-
-  void _incCounter4(int amount) {
-    setState(() {
-      _counter1 += amount;
+      switch (index) {
+        case 0:
+          newIndex = 3;
+          break;
+        case 1:
+          newIndex = 2;
+          break;
+        case 2:
+          newIndex = 1;
+          break;
+        case 3:
+          newIndex = 0;
+          break;
+      }
+      counter[newIndex] += amount;
     });
   }
 
@@ -119,7 +113,9 @@ class _DistributedHomepageState extends State<DistributedHomepage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: SumDisplay(sum: _counter1 + _counter2 + _counter3 + _counter4),
+        title: SumDisplay(
+          sum: counter.fold(0, (previous, current) => previous + current),
+        ),
       ),
       body: Center(
         child: GridView.count(
@@ -130,39 +126,39 @@ class _DistributedHomepageState extends State<DistributedHomepage> {
           crossAxisCount: 2,
           children: <Widget>[
             GridCell(
-              value: _counter1,
+              value: counter[0],
               incCallBack: () {
-                _incCounter1(1);
+                _incCounter(0, 1);
               },
               decCallBack: () {
-                _incCounter1(-1);
+                _incCounter(0, -1);
               },
             ),
             GridCell(
-              value: _counter2,
+              value: counter[1],
               incCallBack: () {
-                _incCounter2(1);
+                _incCounter(1, 1);
               },
               decCallBack: () {
-                _incCounter2(-1);
+                _incCounter(1, -1);
               },
             ),
             GridCell(
-              value: _counter3,
+              value: counter[2],
               incCallBack: () {
-                _incCounter3(1);
+                _incCounter(2, 1);
               },
               decCallBack: () {
-                _incCounter3(-1);
+                _incCounter(2, -1);
               },
             ),
             GridCell(
-              value: _counter4,
+              value: counter[3],
               incCallBack: () {
-                _incCounter4(1);
+                _incCounter(3, 1);
               },
               decCallBack: () {
-                _incCounter4(-1);
+                _incCounter(3, -1);
               },
             ),
           ],
