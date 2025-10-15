@@ -124,44 +124,13 @@ class _DistributedHomepageState extends State<DistributedHomepage> {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
           crossAxisCount: 2,
-          children: <Widget>[
-            GridCell(
-              value: counter[0],
-              incCallBack: () {
-                _incCounter(0, 1);
-              },
-              decCallBack: () {
-                _incCounter(0, -1);
-              },
-            ),
-            GridCell(
-              value: counter[1],
-              incCallBack: () {
-                _incCounter(1, 1);
-              },
-              decCallBack: () {
-                _incCounter(1, -1);
-              },
-            ),
-            GridCell(
-              value: counter[2],
-              incCallBack: () {
-                _incCounter(2, 1);
-              },
-              decCallBack: () {
-                _incCounter(2, -1);
-              },
-            ),
-            GridCell(
-              value: counter[3],
-              incCallBack: () {
-                _incCounter(3, 1);
-              },
-              decCallBack: () {
-                _incCounter(3, -1);
-              },
-            ),
-          ],
+          children: List.generate(counter.length, (index) {
+            return GridCell(
+              value: counter[index],
+              incCallBack: () => _incCounter(index, 1),
+              decCallBack: () => _incCounter(index, -1),
+            );
+          }),
         ),
       ),
     );
