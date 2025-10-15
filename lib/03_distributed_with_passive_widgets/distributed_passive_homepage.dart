@@ -18,21 +18,24 @@ class CounterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.arrow_upward),
-          iconSize: 40,
-          onPressed: stateArguments.incCallBack,
-        ),
-        Text(stateArguments.value.toString()),
-        IconButton(
-          icon: const Icon(Icons.arrow_downward),
-          iconSize: 40,
-          onPressed: stateArguments.decCallBack,
-        ),
-      ],
+    return Container(
+      color: Colors.blueAccent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.arrow_upward),
+            iconSize: 40,
+            onPressed: stateArguments.incCallBack,
+          ),
+          Text(stateArguments.value.toString()),
+          IconButton(
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 40,
+            onPressed: stateArguments.decCallBack,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -81,22 +84,25 @@ class DistributedPassiveHomepage extends StatefulWidget {
   const DistributedPassiveHomepage({super.key});
 
   @override
-  State<DistributedPassiveHomepage> createState() => _DistributedPassiveHomepageState();
+  State<DistributedPassiveHomepage> createState() =>
+      _DistributedPassiveHomepageState();
 }
 
-class _DistributedPassiveHomepageState extends State<DistributedPassiveHomepage> {
-  int _counter1 = 0;
-  int _counter2 = 0;
+class _DistributedPassiveHomepageState
+    extends State<DistributedPassiveHomepage> {
+  List<int> counter = List.filled(2, 0);
 
-  void _incCounter1(int amount) {
+  void _incCounter(int index, int amount) {
+    int newIndex = 0;
     setState(() {
-      _counter2 += amount;
-    });
-  }
-
-  void _incCounter2(int amount) {
-    setState(() {
-      _counter1 += amount;
+      if (index == 0) {
+        newIndex = 1;
+      } else if (index == 1) {
+        newIndex = 0;
+      } else {
+        throw UnimplementedError("Index is out of range");
+      }
+      counter[newIndex] += amount;
     });
   }
 
@@ -105,27 +111,19 @@ class _DistributedPassiveHomepageState extends State<DistributedPassiveHomepage>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: SumDisplay(sum: _counter1 + _counter2),
+        title: SumDisplay(sum: counter[0] + counter[1]),
       ),
       body: Center(
         child: DistributedRow(
           firstCounterArgs: StateArguments(
-            value: _counter1,
-            incCallBack: () {
-              _incCounter1(1);
-            },
-            decCallBack: () {
-              _incCounter1(-1);
-            },
+            value: counter[0],
+            incCallBack: () => _incCounter(0, 1),
+            decCallBack: () => _incCounter(0, -1),
           ),
           secondCounterArgs: StateArguments(
-            value: _counter2,
-            incCallBack: () {
-              _incCounter2(1);
-            },
-            decCallBack: () {
-              _incCounter2(-1);
-            },
+            value: counter[1],
+            incCallBack: () => _incCounter(1, 1),
+            decCallBack: () => _incCounter(1, -1),
           ),
         ),
       ),
