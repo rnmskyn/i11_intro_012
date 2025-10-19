@@ -8,37 +8,31 @@ class LocalHomepage extends StatefulWidget {
 }
 
 class _LocalHomepageState extends State<LocalHomepage> {
-  int _counter1 = 0;
-  int _counter2 = 0;
-  int _counter3 = 0;
-  int _counter4 = 0;
   int _sum = 0;
+  List<int> counter = List.filled(4, 0);
+  int newValue = 0;
 
-  void _incCounter1(int amount) {
+  void incCounter(int index, int amount) {
     setState(() {
-      _counter4 += amount;
-      _sum += amount;
-    });
-  }
 
-  void _incCounter2(int amount) {
-    setState(() {
-      _counter3 += amount;
-      _sum += amount;
-    });
-  }
-
-  void _incCounter3(int amount) {
-    setState(() {
-      _counter2 += amount;
-      _sum += amount;
-    });
-  }
-
-  void _incCounter4(int amount) {
-    setState(() {
-      _counter1 += amount;
-      _sum += amount;
+      int newIndex = 0;
+      
+      switch (index) {
+        case 0:
+          newIndex = 3;
+          break;
+        case 1:
+          newIndex = 2;
+          break;
+        case 2:
+          newIndex = 1;
+          break;
+        case 3:
+          newIndex = 0;
+          break;
+      }
+      counter[newIndex] += amount;
+      _sum = counter.fold(0, (previous, current) => previous + current);
     });
   }
 
@@ -68,20 +62,23 @@ class _LocalHomepageState extends State<LocalHomepage> {
               padding: const EdgeInsets.all(8),
               color: Colors.teal[100],
               child: Row(
-                children: <Widget>[
+                children: [
                   IconButton(
                     icon: const Icon(Icons.arrow_upward),
                     iconSize: 40,
                     onPressed: () {
-                      _incCounter1(1);
+                      incCounter(0, 1);
+                      Text("NewValue");
                     },
+                   
                   ),
-                  Text(_counter1.toString()),
+                  ,
+              
                   IconButton(
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 40,
                     onPressed: () {
-                      _incCounter1(-1);
+                      incCounter(0, -1);
                     },
                   ),
                 ],
@@ -96,15 +93,15 @@ class _LocalHomepageState extends State<LocalHomepage> {
                     icon: const Icon(Icons.arrow_upward),
                     iconSize: 40,
                     onPressed: () {
-                      _incCounter2(1);
+                      incCounter(1, 1);
                     },
                   ),
-                  Text(_counter2.toString()),
+                  Text(counter.toString()),
                   IconButton(
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 40,
                     onPressed: () {
-                      _incCounter2(-1);
+                      incCounter(1, -1);
                     },
                   ),
                 ],
@@ -119,15 +116,15 @@ class _LocalHomepageState extends State<LocalHomepage> {
                     icon: const Icon(Icons.arrow_upward),
                     iconSize: 40,
                     onPressed: () {
-                      _incCounter3(1);
+                      incCounter(2, 1);
                     },
                   ),
-                  Text(_counter3.toString()),
+                  Text(counter.toString()),
                   IconButton(
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 40,
                     onPressed: () {
-                      _incCounter3(-1);
+                      incCounter(2, -1);
                     },
                   ),
                 ],
@@ -142,15 +139,15 @@ class _LocalHomepageState extends State<LocalHomepage> {
                     icon: const Icon(Icons.arrow_upward),
                     iconSize: 40,
                     onPressed: () {
-                      _incCounter4(1);
+                      incCounter(3, 1);
                     },
                   ),
-                  Text(_counter4.toString()),
+                  Text(counter.toString()),
                   IconButton(
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 40,
                     onPressed: () {
-                      _incCounter4(-1);
+                      incCounter(3, -1);
                     },
                   ),
                 ],
